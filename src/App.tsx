@@ -1,35 +1,41 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import React, { useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { Form, Input } from 'antd';
+import { Box } from './components/box/Box';
 import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
+const App: React.FC = () => {
+  const [length, setLength] = useState<number>(1);
+  const [width, setWidth] = useState<number>(1);
+  const [height, setHeight] = useState<number>(1);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Form>
+        <Form.Item label="Length" name="length">
+          <Input
+            type="number"
+            onChange={(e) => setLength(Number(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item label="Width" name="width">
+          <Input
+            type="number"
+            onChange={(e) => setWidth(Number(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item label="Height" name="height">
+          <Input
+            type="number"
+            onChange={(e) => setHeight(Number(e.target.value))}
+          />
+        </Form.Item>
+        <Form.Item>
+          <button type="submit">Calculate</button>
+        </Form.Item>
+      </Form>
+    </div>
   );
-}
+};
 
 export default App;
