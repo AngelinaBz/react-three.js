@@ -5,16 +5,19 @@ import { OrbitControls } from '@react-three/drei';
 import { Box } from './components/box/Box';
 import './App.css';
 
+interface BoxFormValues {
+  length: number;
+  width: number;
+  height: number;
+}
+
 const App: React.FC = () => {
-  const [length, setLength] = useState<number>();
-  const [width, setWidth] = useState<number>();
-  const [height, setHeight] = useState<number>();
   const [vertices, setVertices] = useState<number[]>([]);
   const [indices, setIndices] = useState<number[]>([]);
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: BoxFormValues) => {
     try {
-      const response = await fetch('http://localhost:5001/api/box', {
+      const response = await fetch('http://localhost:3000/api/box', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,34 +37,27 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="three-container">
       <Form onFinish={handleSubmit}>
         <Form.Item label="Length" name="length">
-          <Input
-            type="number"
-            onChange={(e) => setLength(Number(e.target.value))}
-          />
+          <Input type="number" />
         </Form.Item>
         <Form.Item label="Width" name="width">
-          <Input
-            type="number"
-            onChange={(e) => setWidth(Number(e.target.value))}
-          />
+          <Input type="number" />
         </Form.Item>
         <Form.Item label="Height" name="height">
-          <Input
-            type="number"
-            onChange={(e) => setHeight(Number(e.target.value))}
-          />
+          <Input type="number" />
         </Form.Item>
         <Form.Item>
           <button type="submit">Calculate</button>
         </Form.Item>
       </Form>
-      <Canvas>
-        <OrbitControls></OrbitControls>
-        <Box vertices={vertices} indices={indices}></Box>
-      </Canvas>
+      <div>
+        <Canvas className="three-d">
+          <OrbitControls></OrbitControls>
+          <Box vertices={vertices} indices={indices}></Box>
+        </Canvas>
+      </div>
     </div>
   );
 };
