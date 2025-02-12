@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Form, Input } from 'antd';
+import { Form, Input, Switch } from 'antd';
 import { OrbitControls } from '@react-three/drei';
 import { Box } from './components/box/Box';
-import './App.css';
 
 interface BoxFormValues {
   length: number;
@@ -14,6 +13,7 @@ interface BoxFormValues {
 const App: React.FC = () => {
   const [vertices, setVertices] = useState<number[]>([]);
   const [indices, setIndices] = useState<number[]>([]);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   const handleSubmit = async (values: BoxFormValues) => {
     try {
@@ -37,8 +37,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="three-container">
-      <Form onFinish={handleSubmit}>
+    <div className={`three-container ${darkMode ? 'dark' : 'light'}`}>
+      <Form onFinish={handleSubmit} className="form">
         <Form.Item label="Length" name="length">
           <Input type="number" />
         </Form.Item>
@@ -51,8 +51,11 @@ const App: React.FC = () => {
         <Form.Item>
           <button type="submit">Calculate</button>
         </Form.Item>
+        <Form.Item>
+          <Switch checked={darkMode} onChange={setDarkMode} />
+        </Form.Item>
       </Form>
-      <div>
+      <div className="box">
         <Canvas className="three-d">
           <OrbitControls></OrbitControls>
           <Box vertices={vertices} indices={indices}></Box>
