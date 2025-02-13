@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Form, Input, Switch } from 'antd';
 import { OrbitControls } from '@react-three/drei';
 import { Box } from './components/box/Box';
+import './App.css';
 
 interface BoxFormValues {
   length: number;
